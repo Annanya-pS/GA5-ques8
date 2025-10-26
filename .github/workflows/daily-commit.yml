@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allows manual triggering
 
 permissions:
-  contents: write  # ✅ Required so the workflow can push commits
+  contents: write  # Required so the workflow can push commits
 
 jobs:
   daily-commit:
@@ -17,10 +17,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: true  # ✅ Keeps the token for pushing
+          persist-credentials: true
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Configure Git user
+      - name: Configure Git for 23f3002003@ds.study.iitm.ac.in
         run: |
           git config --global user.name "Annanya-pS"
           git config --global user.email "158684858+Annanya-pS@users.noreply.github.com"
