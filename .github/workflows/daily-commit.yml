@@ -2,9 +2,12 @@ name: Daily Commit Workflow
 
 on:
   schedule:
-    # Runs daily at 10:30 AM UTC
+    # Runs daily at 10:30 AM UTC (4:00 PM IST)
     - cron: '30 10 * * *'
   workflow_dispatch: # Allows manual triggering
+
+permissions:
+  contents: write  # ✅ Required so the workflow can push commits
 
 jobs:
   daily-commit:
@@ -14,17 +17,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          persist-credentials: true  # ✅ Keeps the token for pushing
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Configure Git for 23f3002003@ds.study.iitm.ac.in
+      - name: Configure Git user
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "23f3002003@ds.study.iitm.ac.in"
       
-      - name: Create daily commit
+      - name: Create or update daily log
         run: |
-          # Create or update a file with timestamp
-          echo "Last updated: $(date)" >> daily-log.txt
+          echo "Last updated: $(date -u)" >> daily-log.txt
           git add daily-log.txt
-          git commit -m "Daily automated commit - $(date +'%Y-%m-%d %H:%M:%S')"
+          git commit -m "Daily automated commit - $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
