@@ -22,7 +22,7 @@ jobs:
       
       - name: Configure Git user
         run: |
-          git config --global user.name "GitHub Action"
+          git config --global user.name "Annanya-pS"
           git config --global user.email "23f3002003@ds.study.iitm.ac.in"
       
       - name: Create or update daily log
